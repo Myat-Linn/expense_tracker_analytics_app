@@ -1,0 +1,61 @@
+.typeToggle {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.typeBtn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.typeBtn:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.typeBtnIncome {
+  border-color: var(--income);
+  background: var(--income-dim);
+  color: var(--income);
+}
+
+.typeBtnExpense {
+  border-color: var(--expense);
+  background: var(--expense-dim);
+  color: var(--expense);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+}
+
+.actions button {
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
