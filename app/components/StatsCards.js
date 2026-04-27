@@ -1,72 +1,27 @@
 'use client';
 
-import styles from './StatsCards.module.css';
-
-function formatCurrency(amount) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount);
-}
-
 export default function StatsCards({ stats }) {
+  const fmt = (n) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 }).format(n);
+
   const cards = [
-    {
-      id: 'income',
-      label: 'Total Income',
-      value: stats.totalIncome,
-      monthly: stats.monthlyIncome,
-      icon: '📈',
-      cardClass: styles.cardIncome,
-      iconClass: styles.iconIncome,
-      valueClass: styles.valueIncome,
-    },
-    {
-      id: 'expenses',
-      label: 'Total Expenses',
-      value: stats.totalExpenses,
-      monthly: stats.monthlyExpenses,
-      icon: '📉',
-      cardClass: styles.cardExpense,
-      iconClass: styles.iconExpense,
-      valueClass: styles.valueExpense,
-    },
-    {
-      id: 'balance',
-      label: 'Net Balance',
-      value: stats.balance,
-      monthly: stats.monthlyBalance,
-      icon: '💰',
-      cardClass: styles.cardBalance,
-      iconClass: styles.iconBalance,
-      valueClass: stats.balance >= 0 ? styles.valueBalance : styles.valueNegative,
-    },
+    { id: 'income', label: 'Total Income', value: stats.totalIncome, monthly: stats.monthlyIncome, icon: '📈', cls: 'income' },
+    { id: 'expenses', label: 'Total Expenses', value: stats.totalExpenses, monthly: stats.monthlyExpenses, icon: '📉', cls: 'expense' },
+    { id: 'balance', label: 'Net Balance', value: stats.balance, monthly: stats.monthlyBalance, icon: '💰', cls: 'balance' },
   ];
 
   return (
-    <div className={`${styles.grid} stagger`}>
-      {cards.map(card => (
-        <div
-          key={card.id}
-          id={`stat-${card.id}`}
-          className={`glass-card ${styles.card} ${card.cardClass} animate-fade-in-up`}
-        >
-          <div className={styles.cardHeader}>
-            <span className={styles.cardLabel}>{card.label}</span>
-            <div className={`${styles.cardIcon} ${card.iconClass}`}>
-              {card.icon}
-            </div>
+    <div className="stats-grid stagger">
+      {cards.map(c => (
+        <div key={c.id} id={`stat-${c.id}`} className="glass-card stat-card animate-fade-in-up">
+          <div className="stat-card-header">
+            <span className="stat-card-label">{c.label}</span>
+            <div className={`stat-card-icon ${c.cls}`}>{c.icon}</div>
           </div>
-          <div className={`${styles.cardValue} ${card.valueClass}`}>
-            {formatCurrency(card.value)}
+          <div className={`stat-card-value ${c.cls === 'balance' ? (c.value >= 0 ? 'positive' : 'negative') : c.cls}`}>
+            {fmt(c.value)}
           </div>
-          <div className={styles.cardSub}>
-            <span className={card.monthly >= 0 ? styles.trendUp : styles.trendDown}>
-              {formatCurrency(Math.abs(card.monthly))}
-            </span>
-            {' this month'}
+          <div className="stat-card-sub">
+            {fmt(Math.abs(c.monthly))} this month
           </div>
         </div>
       ))}
